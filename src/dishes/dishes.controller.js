@@ -29,11 +29,7 @@ function nameExists(req, res, next) {
 // IS NAME VALID - VALIDATION
 function isNameValid(req, res, next) {
   const { data: name } = req.body;
-  if (
-    req.body.data.name === null ||
-    req.body.data.name === "" ||
-    req.body.data.name === undefined
-  ) {
+  if (!req.body.data.name) {
     next({ status: 400, message: "Dish must include a name." });
   }
   next();
@@ -55,11 +51,7 @@ function descriptionExists(req, res, next){
 // IS DESCRIPTION VALID - VALIDATION
 function isDescriptionValid(req, res, next) {
   const { data: { description } = {} } = req.body;
-  if (
-      req.body.data.description === null ||
-      req.body.data.description === "" ||
-      req.body.data.description === undefined
-    ) {
+  if (!req.body.data.description) {
       next({ status: 400, message: "Dish must include a description." });
     }
     next();
@@ -81,11 +73,7 @@ function priceExists(req, res, next){
 // IS PRICE VALID - VALIDATION
 function isPriceValid(req, res, next) {
   const { data: { price } = {} } = req.body;
-   if (
-        price === null ||
-        price === "" ||
-        price === undefined
-      ) {
+   if (!price) {
         next({ status: 400, message: "Dish must include a price." });
       }
     if (typeof price === "number" && price > 0) {
@@ -115,11 +103,7 @@ function imageUrlExists(req, res, next){
 // IS IMAGEURL VALID - VALIDATION
 function isImageUrlValid(req, res, next) {
   const { data: { image_url } = {} } = req.body;
- if (
-    req.body.data.image_url === null ||
-    req.body.data.image_url === undefined ||
-    req.body.data.image_url === ""
-  ) {
+ if (!req.body.data.image_url) {
     next({ status: 400, message: "Dish must include an image_url."});
   } 
   next();
@@ -161,7 +145,7 @@ function dataIdMatchesDishId(req, res, next) {
   const { data: { id } = {} } = req.body;
   //const id = req.body.data.id;
   const dishId = req.params.dishId;
-  if (id !== undefined && id !== null && id !== "" && id !== dishId) {
+  if (id && id !== dishId) {
     next({
       status: 400,
       message: `id ${id} must match dataId provided in parameters`,

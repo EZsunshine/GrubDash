@@ -81,11 +81,7 @@ function orderExists(req, res, next) {
 function isIdValid(req, res, next) {
   let { data: { id } } = req.body;
   const orderId = req.params.orderId;
-  if (
-    req.body.data.id === null ||
-    req.body.data.id === undefined ||
-    req.body.data.id === ""
-  ) {
+  if (!req.body.data.id) {
     return next();
   }
   if (req.body.data.id !== orderId) {
@@ -101,11 +97,7 @@ function isIdValid(req, res, next) {
 // IS deliverTo VALID - VALIDATION
 function isDeliverToValid(req, res, next) {
   const { data: deliverTo } = req.body;
-  if (
-    req.body.data.deliverTo === null ||
-    req.body.data.deliverTo === "" ||
-    req.body.data.deliverTo === undefined
-  ) {
+  if (!req.body.data.deliverTo) {
     next({ status: 400, message: "Order must include a deliverTo." });
   }
   next();
